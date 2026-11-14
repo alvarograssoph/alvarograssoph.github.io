@@ -311,7 +311,7 @@ section{position:relative;padding:clamp(80px,13vw,170px) var(--pad)}
 
 /* services */
 .svc{border-top:1px solid var(--line)}
-.svc-row{display:grid;grid-template-columns:80px 1.1fr 1.4fr 40px;gap:20px;align-items:start;padding:clamp(24px,3vw,40px) 0;border-bottom:1px solid var(--line);position:relative;cursor:default;overflow:hidden}
+.svc-row{display:grid;grid-template-columns:80px 1.1fr 1.4fr;gap:20px;align-items:start;padding:clamp(24px,3vw,40px) 0;border-bottom:1px solid var(--line);position:relative;cursor:default;overflow:hidden}
 .svc-row::before{content:"";position:absolute;inset:0;background:var(--acc);transform:translateY(101%);transition:transform .7s var(--ease);z-index:-1}
 .svc-row:hover::before{transform:none}
 .svc-row:hover{color:#000}
@@ -463,8 +463,8 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
   .aerial,.proj,.about,.contact{grid-template-columns:1fr}
   .contact #cf{order:-1}
   .proj:nth-child(even) .pimgs{order:0}
-  .svc-row{grid-template-columns:44px 1fr 28px}
-  .svc-row ul{grid-column:2/4}
+  .svc-row{grid-template-columns:44px 1fr}
+  .svc-row ul{grid-column:2/3}
   .svc-row .arr{display:none}
   .grid{columns:2;column-gap:8px}
   .ph{margin-bottom:8px}
@@ -575,7 +575,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
       </div>
     </div>
   </div>
-  <div style="margin-top:28px" class="reveal"><a href="https://www.youtube.com/@alvaro_grasso" target="_blank" rel="noopener" class="btn s">Ver más videos en YouTube ↗</a></div>
+  <div style="margin-top:28px" class="reveal"><a href="https://www.youtube.com/@alvaro_grasso" target="_blank" rel="noopener" class="btn s">Ver más videos en YouTube</a></div>
 </section>
 
 <section id="proyectos">
@@ -592,11 +592,11 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
         <p>Proyecto propio iniciado en 2020. Vuelvo a los lugares fotografiados a principios del 1900, busco el mismo punto de vista y sostengo la foto original frente al paisaje de hoy. Un diálogo entre el pasado y el presente de nuestras ciudades, que incluye la restauración digital de las imágenes más antiguas.</p>
         <div class="tags mono"><span>Desde 2020</span><span>Historia</span><span>Restauración</span></div>
         <div class="btns" style="margin-top:22px">
-          <a href="https://www.unamiradaalpasado.com/" target="_blank" rel="noopener" class="btn p">Ver el proyecto completo ↗</a>
+          <a href="https://www.unamiradaalpasado.com/" target="_blank" rel="noopener" class="btn p">Ver el proyecto completo</a>
         </div>
         <div class="mono" style="margin-top:18px;color:var(--mut);display:flex;flex-wrap:wrap;gap:8px 18px">Prensa:
-          <a href="https://www.portalesdeluruguay.com.uy/es/blogs/noticias/fotografo-uruguayo-registra-el-pasado-y-presente-de-las-arquitecturas" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--acc)">Portales del Uruguay ↗</a>
-          <a href="https://www.coloniaya.com/noticia.php?id=77621" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--acc)">Colonia Ya ↗</a>
+          <a href="https://www.portalesdeluruguay.com.uy/es/blogs/noticias/fotografo-uruguayo-registra-el-pasado-y-presente-de-las-arquitecturas" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--acc)">Portales del Uruguay</a>
+          <a href="https://www.coloniaya.com/noticia.php?id=77621" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--acc)">Colonia Ya</a>
         </div>
       </div>
     </article>
@@ -609,11 +609,11 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
     <div class="mono">Foto · Video · Drone</div>
   </div>
   <div class="svc">
-    <div class="svc-row reveal"><span class="mono">01</span><h3>Drone y tomas aéreas</h3><ul><li>Video y foto</li><li>Inmobiliaria</li><li>Turismo</li><li>Hotelería</li></ul><span class="arr">↗</span></div>
-    <div class="svc-row reveal"><span class="mono">02</span><h3>Naturaleza y deporte</h3><ul><li>Fotografía deportiva</li><li>Fotografía de paisaje</li><li>Fotografía de naturaleza</li></ul><span class="arr">↗</span></div>
-    <div class="svc-row reveal"><span class="mono">03</span><h3>Gastronomía y hostelería</h3><ul><li>Platos y producto</li><li>Ambientes</li><li>Equipo de trabajo</li></ul><span class="arr">↗</span></div>
-    <div class="svc-row reveal"><span class="mono">04</span><h3>Relevamiento y patrimonio</h3><ul><li>Relevamiento arqueológico</li><li>Registro de obra</li><li>Fotografía aérea y terrestre</li></ul><span class="arr">↗</span></div>
-    <div class="svc-row reveal"><span class="mono">05</span><h3>Fotografía de eventos</h3><ul><li>Eventos culturales</li><li>Conciertos</li><li>Eventos sociales y corporativos</li></ul><span class="arr">↗</span></div>
+    <div class="svc-row reveal"><span class="mono">01</span><h3>Drone y tomas aéreas</h3><ul><li>Video y foto</li><li>Inmobiliaria</li><li>Turismo</li><li>Hotelería</li></ul></div>
+    <div class="svc-row reveal"><span class="mono">02</span><h3>Naturaleza y deporte</h3><ul><li>Fotografía deportiva</li><li>Fotografía de paisaje</li><li>Fotografía de naturaleza</li></ul></div>
+    <div class="svc-row reveal"><span class="mono">03</span><h3>Gastronomía y hostelería</h3><ul><li>Platos y producto</li><li>Ambientes</li><li>Equipo de trabajo</li></ul></div>
+    <div class="svc-row reveal"><span class="mono">04</span><h3>Relevamiento y patrimonio</h3><ul><li>Relevamiento arqueológico</li><li>Registro de obra</li><li>Fotografía aérea y terrestre</li></ul></div>
+    <div class="svc-row reveal"><span class="mono">05</span><h3>Fotografía de eventos</h3><ul><li>Eventos culturales</li><li>Conciertos</li><li>Eventos sociales y corporativos</li></ul></div>
   </div>
 </section>
 
@@ -656,7 +656,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
       <label class="mono">¿Qué necesitás?<input name="t" placeholder="Evento, drone, gastronomía…"></label>
       <label class="mono">Mensaje<textarea name="m"></textarea></label>
       <div class="btns">
-        <button class="btn p" type="submit" data-via="wa">Enviar por WhatsApp →</button>
+        <button class="btn p" type="submit" data-via="wa">Enviar por WhatsApp</button>
         <button class="btn s" type="submit" data-via="mail">Enviar por mail</button>
       </div>
       <div class="note" id="note"></div>
@@ -677,7 +677,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
   <div class="al-top"><button class="back" id="alx">← Volver</button><div class="al-tabs" id="altabs"></div></div>
   <div class="al-hero"><img id="alimg" alt=""><div class="al-head"><div><h2 id="alt"></h2><p id="ald"></p></div><div class="mono" id="aln"></div></div></div>
   <div class="al-body"><div class="grid" id="algrid"></div></div>
-  <a class="al-next" id="alnext" href="#" role="button"><img alt=""><div><span class="mono">Siguiente área →</span><b></b></div></a>
+  <a class="al-next" id="alnext" href="#" role="button"><img alt=""><div><span class="mono">Siguiente área</span><b></b></div></a>
 </div>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Foto ampliada">
@@ -796,7 +796,7 @@ let wList=[],wFilter="all";
   const ALL=[];for(let r=0;r<per;r++)SUBORD.forEach(k=>{const l=subs[k].filter(i=>!ALL.includes(i));if(l[0]!=null)ALL.push(l[0])});
   const tiles={};
   const mk=i=>{if(tiles[i])return tiles[i];const d=document.createElement("div");d.className="tile";d.dataset.i=i;const k=SPR[PHOTOS[i][0]]??0;
-    d.innerHTML=`<i class="sp" style="background-position:${(k%16)/15*100}% ${Math.floor(k/16)/13*100}%"></i><i class="hi"></i><span class="cap"><span>${NAME[PHOTOS[i][1]]}</span><span>↗</span></span>`;
+    d.innerHTML=`<i class="sp" style="background-position:${(k%16)/15*100}% ${Math.floor(k/16)/13*100}%"></i><i class="hi"></i><span class="cap"><span>${NAME[PHOTOS[i][1]]}</span></span>`;
     d.addEventListener("mouseenter",()=>{const h=d.querySelector(".hi");if(!h.style.backgroundImage)h.style.backgroundImage=`url(img/${PHOTOS[i][0]}-t.jpg)`},{once:true});
     return tiles[i]=d};
   const wf=$("#wf");
@@ -810,7 +810,7 @@ let wList=[],wFilter="all";
     wall.style.setProperty("--cols",c);wall.innerHTML="";
     L.forEach((i,n)=>{const d=mk(i);d.classList.remove("in");d.dataset.d=Math.min(n,16)*40;wall.append(d);tio.observe(d)});
     const area=k==="all"?null:k;
-    more.textContent=area?`Ver todas las fotos de ${GNAME[k]} →`:"Explorar todas las áreas →";
+    more.textContent=area?`Ver todas las fotos de ${GNAME[k]}`:"Explorar todas las áreas";
     more.onclick=()=>openAlbum(area||CL[0][0],more);
   };
   addEventListener("resize",()=>{clearTimeout(setWall.t);setWall.t=setTimeout(()=>setWall(wFilter),200)});
@@ -835,7 +835,7 @@ function fillAlbum(k){
   const on=$("#altabs .chip.on");on&&on.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"});
   const im=$("#alimg");im.src=`img/${c[2]}.jpg`;im.alt=c[1];
   $("#alt").textContent=c[1];$("#ald").textContent=AREA[k][1];
-  $("#aln").innerHTML=`<a href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener" style="color:var(--acc)">Más en Instagram ↗</a>`;
+  $("#aln").innerHTML=`<a href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener" style="color:var(--acc)">Más en Instagram</a>`;
   const g=$("#algrid");g.innerHTML="";
   L.forEach((i,n)=>{const p=PHOTOS[i];const f=document.createElement("figure");f.className="ph";f.dataset.d=Math.min(n,10)*60;
     const img=new Image();img.loading="lazy";img.decoding="async";img.alt=c[1];img.src=`img/${p[0]}-t.jpg`;img.width=720;img.height=Math.round(720/p[2]);img.onload=()=>img.classList.add("ld");
