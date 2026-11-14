@@ -655,15 +655,17 @@ $("#total").textContent=PHOTOS.length;
 (function(){
   let p=0;const ln=$("#ln"),bar=$("#lb-bar");
   const v=$("#hv");let vidOk=false;v.addEventListener("canplay",()=>vidOk=true,{once:true});
-  const t0=performance.now();
+  const t0=performance.now();let fin=false;
   (function tick(){
     const el=performance.now()-t0;
     const target=Math.min(100,(el/1600)*100*(vidOk||el>2600?1.4:1));
     p+=(target-p)*.18; if(target>=100&&p>99.4)p=100;
     ln.textContent=String(Math.round(p)).padStart(3,"0");bar.style.width=p+"%";
-    if(p<100&&!reduce)requestAnimationFrame(tick);else done();
+    if(p<100&&!reduce&&!fin)requestAnimationFrame(tick);else done();
   })();
+  setTimeout(done,3600);
   function done(){
+    if(fin)return;fin=true;
     ln.textContent="100";bar.style.width="100%";
     setTimeout(()=>{$("#loader").classList.add("out");document.body.classList.remove("lock");document.body.classList.add("ready");},250);
   }
