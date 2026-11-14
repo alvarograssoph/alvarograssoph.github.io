@@ -374,6 +374,18 @@ section{position:relative;padding:clamp(80px,13vw,170px) var(--pad)}
 .about .big b{font-weight:500;color:var(--acc)}
 .about p.txt{color:#c3c8ce;margin-top:26px;max-width:560px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:44px;border-top:1px solid var(--line)}
+.xp{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line);align-items:stretch}
+.xp .yrs b{display:block;font-size:clamp(44px,5.6vw,76px);font-weight:300;letter-spacing:-.05em;line-height:1}
+.xp .yrs b span{color:var(--acc)}
+.xp .yrs .mono{display:block;color:var(--mut);margin-top:12px;max-width:260px;line-height:1.6}
+.xp .igc{display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:20px 22px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(135deg,rgba(200,255,58,.07),rgba(255,255,255,.02));transition:border-color .3s,background .3s,transform .4s var(--ease)}
+.xp .igc .mono{color:var(--mut)}
+.xp .igc b{font-size:clamp(20px,2vw,28px);font-weight:500;letter-spacing:-.02em}
+.xp .igc b i{font-style:normal;display:inline-block;color:var(--acc);transition:transform .4s var(--ease)}
+.xp .igc .h{color:var(--acc);font-family:var(--mono);font-size:14px}
+.xp .igc:hover{border-color:var(--acc);transform:translateY(-3px)}
+.xp .igc:hover b i{transform:rotate(-45deg) translate(2px,-2px)}
+@media(max-width:600px){.xp{grid-template-columns:1fr}}
 .stats div{padding:22px 0}
 .stats b{display:block;font-size:clamp(36px,5vw,64px);font-weight:300;letter-spacing:-.05em;line-height:1}
 .stats span{color:var(--mut)}
@@ -520,7 +532,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
 <section id="trabajos">
   <div class="sec-head">
     <h2 class="split">Trabajos <em>seleccionados</em></h2>
-    <div class="mono">04 áreas · <span id="total"></span> imágenes<br>Explorá el mosaico</div>
+    <div class="mono">Una selección de cada área<br>Explorá el mosaico</div>
   </div>
   <div class="wall-filters" id="wf"></div>
   <div class="wall" id="wall"></div>
@@ -595,17 +607,15 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
   <div class="about">
     <div class="pwrap reveal">
       <div class="portrait"><img src="img/alvaro-retrato2.jpg" alt="Retrato de Alvaro Grasso" loading="lazy" style="object-position:50% 20%"><span class="mono">Alvaro Grasso · Fotógrafo</span></div>
-      <figure class="ins"><img src="img/alvaro-camara.jpg" alt="Alvaro Grasso fotografiando en la Plaza de Toros de Colonia" loading="lazy"></figure>
     </div>
     <div>
       <div class="mono acc reveal" style="margin-bottom:22px">05 — Sobre mí</div>
       <p class="big reveal">Soy <b>Alvaro Grasso</b>, fotógrafo uruguayo. Me gusta crear, colaborar e idear proyectos que generen impacto, y que cada trabajo transmita algo.</p>
       <p class="txt reveal">Trabajo con fotografía, video y drone: paisaje, deporte, música, arquitectura y sociedad. Busco los momentos espontáneos y los detalles que cuentan quién es cada persona, marca o lugar. También acompaño a empresas con contenido y marketing digital, para que comuniquen con una imagen clara y propia.</p>
       <p class="txt reveal" style="color:var(--fg)"><span class="acc">●</span> Estoy abierto a colaborar: si tenés una idea, un proyecto o una propuesta en la que pueda aportar, me encantaría sumarme.</p>
-      <div class="stats reveal">
-        <div><b data-count="4">0</b><span class="mono">Áreas</span></div>
-        <div><b data-count="0" id="statn">0</b><span class="mono">Fotos aquí</span></div>
-        <div><b>4K</b><span class="mono">Video aéreo</span></div>
+      <div class="xp reveal">
+        <div class="yrs"><b><span data-count="10" id="yrs">0</span> años</b><span class="mono">retratando momentos y contando historias</span></div>
+        <a class="igc" href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener"><span class="mono">Todo mi trabajo, día a día</span><b>Seguime en Instagram <i>↗</i></b><span class="h">@alvaro_grasso</span></a>
       </div>
     </div>
   </div>
@@ -693,7 +703,7 @@ NAME.pasado="Una mirada al pasado";
 const pad=n=>String(n).padStart(2,"0");
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 $("#yr").textContent=$("#yr2").textContent=new Date().getFullYear();
-$("#total").textContent=PHOTOS.length;
+
 
 /* preloader: enfoque y obturador (~1,6 s) */
 (function(){
@@ -738,6 +748,7 @@ $$(".reveal,.split").forEach(el=>io.observe(el));
 /* counters */
 const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);const el=e.target,to=+el.dataset.count,t0=performance.now();
   (function f(t){const k=Math.min(1,(t-t0)/1600),v=Math.round(to*(1-Math.pow(1-k,4)));el.textContent=v;if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});
+const yrsEl=$("#yrs");if(yrsEl)yrsEl.dataset.count=Math.max(1,new Date().getFullYear()-2016);
 $$("[data-count]").forEach(el=>cio.observe(el));
 
 /* áreas: orden del mosaico, textos y álbum */
@@ -754,8 +765,7 @@ const catList=k=>{const seen=new Set(),out=[];(SUBS[k]||[k]).forEach(sk=>subList
 /* intercala las subáreas para que la vista previa de cada grupo sea variada */
 const mixList=k=>{const ls=(SUBS[k]||[k]).map(sk=>subList(sk).filter(i=>PHOTOS[i][1]!=="pasado"));const seen=new Set(),out=[];for(let r=0;ls.some(l=>l.length>r);r++)ls.forEach(l=>{const i=l[r];if(i!=null&&!seen.has(i)){seen.add(i);out.push(i)}});return out};
 const shown=new Set();CL.forEach(c=>catList(c[0]).forEach(i=>shown.add(i)));
-$("#total").textContent=shown.size;
-const st=$("#statn");if(st)st.dataset.count=shown.size;
+
 
 /* mosaico interactivo */
 const SPR={"drone-17":0,"drone-16":1,"drone-19":2,"drone-01":3,"drone-14":4,"drone-05":5,"drone-07":6,"drone-11":7,"drone-13":8,"drone-15":9,"drone-04":10,"drone-06":11,"drone-08":12,"drone-09":13,"drone-10":14,"drone-12":15,"drone-18":16,"drone-02":17,"drone-03":18,"deportiva-08":19,"deportiva-03":20,"deportiva-14":21,"deportiva-13":22,"deportiva-12":23,"deportiva-10":24,"deportiva-11":25,"deportiva-09":26,"deportiva-05":27,"deportiva-04":28,"deportiva-06":29,"deportiva-07":30,"deportiva-02":31,"deportiva-01":32,"deportiva-16":33,"deportiva-17":34,"deportiva-18":35,"musica-15":36,"musica-19":37,"musica-17":38,"musica-28":39,"musica-29":40,"musica-35":41,"musica-18":42,"musica-25":43,"musica-26":44,"musica-36":45,"musica-34":46,"musica-20":47,"musica-22":48,"musica-24":49,"musica-23":50,"musica-21":51,"musica-16":52,"musica-27":53,"musica-32":54,"musica-33":55,"musica-37":56,"musica-38":57,"musica-39":58,"musica-40":59,"musica-09":60,"musica-10":61,"musica-11":62,"musica-12":63,"musica-13":64,"musica-14":65,"musica-01":66,"musica-02":67,"musica-03":68,"musica-04":69,"musica-05":70,"musica-06":71,"musica-07":72,"musica-08":73,"musica-41":74,"musica-42":75,"musica-43":76,"musica-44":77,"musica-45":78,"musica-46":79,"musica-47":80,"marchas-07":81,"marchas-04":82,"marchas-02":83,"marchas-03":84,"marchas-06":85,"marchas-08":86,"marchas-05":87,"marchas-01":88,"sociales-02":89,"sociales-01":90,"sociales-03":91,"sociales-04":92,"gastronomia-08":93,"gastronomia-07":94,"gastronomia-05":95,"gastronomia-04":96,"gastronomia-09":97,"naturaleza-02":98,"naturaleza-03":99,"naturaleza-01":100,"naturaleza-04":101,"naturaleza-05":102,"naturaleza-06":103,"naturaleza-07":104,"naturaleza-08":105,"naturaleza-09":106,"naturaleza-10":107,"naturaleza-11":108,"naturaleza-12":109,"naturaleza-13":110,"naturaleza-14":111,"naturaleza-15":112,"naturaleza-16":113,"naturaleza-17":114,"naturaleza-18":115,"naturaleza-19":116,"naturaleza-20":117,"naturaleza-21":118,"naturaleza-22":119,"naturaleza-23":120,"naturaleza-24":121,"naturaleza-25":122,"naturaleza-26":123,"naturaleza-27":124,"naturaleza-28":125,"naturaleza-29":126,"naturaleza-30":127,"naturaleza-31":128,"naturaleza-32":129,"naturaleza-33":130,"naturaleza-34":131,"naturaleza-35":132,"naturaleza-36":133,"naturaleza-37":134,"naturaleza-38":135,"naturaleza-39":136,"naturaleza-40":137,"naturaleza-41":138,"naturaleza-42":139,"naturaleza-43":140,"naturaleza-44":141,"naturaleza-45":142,"naturaleza-46":143,"naturaleza-47":144,"naturaleza-48":145,"urbana-04":146,"urbana-01":147,"urbana-02":148,"urbana-03":149,"urbana-05":150,"urbana-06":151,"urbana-07":152,"urbana-08":153,"urbana-09":154,"urbana-10":155,"urbana-11":156,"urbana-12":157,"urbana-13":158,"urbana-14":159,"urbana-15":160,"urbana-16":161,"urbana-17":162,"urbana-18":163,"urbana-19":164,"urbana-20":165,"urbana-21":166,"urbana-22":167,"urbana-23":168,"urbana-24":169,"urbana-25":170,"urbana-26":171,"urbana-27":172,"urbana-28":173,"urbana-29":174,"urbana-30":175,"urbana-31":176,"urbana-32":177,"urbana-33":178,"urbana-34":179,"urbana-35":180,"urbana-36":181,"urbana-37":182,"urbana-38":183,"urbana-39":184,"urbana-40":185,"urbana-41":186,"urbana-42":187,"urbana-43":188,"arte-01":189,"arte-02":190,"arte-03":191,"arqueologia-01":192,"arqueologia-02":193,"obras-06":194,"obras-16":195,"obras-04":196,"obras-07":197,"obras-15":198,"obras-01":199,"obras-03":200,"obras-05":201,"obras-02":202,"obras-08":203,"obras-09":204,"obras-10":205,"obras-11":206,"obras-12":207,"obras-13":208,"obras-14":209};
@@ -773,7 +783,7 @@ let wList=[],wFilter="all";
     d.addEventListener("mouseenter",()=>{const h=d.querySelector(".hi");if(!h.style.backgroundImage)h.style.backgroundImage=`url(img/${PHOTOS[i][0]}-t.jpg)`},{once:true});
     return tiles[i]=d};
   const wf=$("#wf");
-  [["all","Selección",ALL.length],...CL.map(c=>[c[0],c[1],lists[c[0]].length])].forEach(([k,l,n])=>{const b=document.createElement("button");b.className="chip";b.dataset.k=k;b.innerHTML=k==="all"?l:`${l}<sup>${n}</sup>`;b.onclick=()=>setWall(k);wf.append(b)});
+  [["all","Selección",ALL.length],...CL.map(c=>[c[0],c[1],lists[c[0]].length])].forEach(([k,l,n])=>{const b=document.createElement("button");b.className="chip";b.dataset.k=k;b.textContent=l;b.onclick=()=>setWall(k);wf.append(b)});
   const tio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;setTimeout(()=>t.classList.add("in"),+t.dataset.d||0);tio.unobserve(t)}}),{threshold:.1});
   function cols(){return innerWidth<=600?3:innerWidth<=900?4:8}
   window.setWall=function(k){
@@ -783,7 +793,7 @@ let wList=[],wFilter="all";
     wall.style.setProperty("--cols",c);wall.innerHTML="";
     L.forEach((i,n)=>{const d=mk(i);d.classList.remove("in");d.dataset.d=Math.min(n,16)*40;wall.append(d);tio.observe(d)});
     const area=k==="all"?null:k;
-    more.textContent=area?`Ver las ${lists[k].length} fotos de ${GNAME[k]} →`:"Explorar todas las áreas →";
+    more.textContent=area?`Ver todas las fotos de ${GNAME[k]} →`:"Explorar todas las áreas →";
     more.onclick=()=>openAlbum(area||CL[0][0],more);
   };
   addEventListener("resize",()=>{clearTimeout(setWall.t);setWall.t=setTimeout(()=>setWall(wFilter),200)});
@@ -801,14 +811,14 @@ let wList=[],wFilter="all";
 /* álbum */
 let li=0,list=[],visible=[],curA=null;
 const gio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const d=+e.target.dataset.d||0;setTimeout(()=>e.target.classList.add("in"),d);gio.unobserve(e.target)}}),{root:$("#album"),threshold:.05,rootMargin:"0px 0px -4% 0px"});
-(function(){const t=$("#altabs");CL.forEach(c=>{const b=document.createElement("button");b.className="chip";b.dataset.k=c[0];b.innerHTML=`${c[1]}<sup>${catList(c[0]).length}</sup>`;b.onclick=()=>fillAlbum(c[0]);t.append(b)})})();
+(function(){const t=$("#altabs");CL.forEach(c=>{const b=document.createElement("button");b.className="chip";b.dataset.k=c[0];b.textContent=c[1];b.onclick=()=>fillAlbum(c[0]);t.append(b)})})();
 function fillAlbum(k){
   curA=k;const c=CATS.find(x=>x[0]===k);const L=catList(k);visible=L.slice();
   $$("#altabs .chip").forEach(b=>b.classList.toggle("on",b.dataset.k===k));
   const on=$("#altabs .chip.on");on&&on.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"});
   const im=$("#alimg");im.src=`img/${c[2]}.jpg`;im.alt=c[1];
   $("#alt").textContent=c[1];$("#ald").textContent=AREA[k][1];
-  $("#aln").innerHTML=`${pad(L.length)} fotos${k==="aereo"?"<br>+ reel de video":""}`;
+  $("#aln").innerHTML=`<a href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener" style="color:var(--acc)">Más en Instagram ↗</a>`;
   const g=$("#algrid");g.innerHTML="";
   L.forEach((i,n)=>{const p=PHOTOS[i];const f=document.createElement("figure");f.className="ph";f.dataset.d=Math.min(n,10)*60;
     const img=new Image();img.loading="lazy";img.decoding="async";img.alt=c[1];img.src=`img/${p[0]}-t.jpg`;img.width=720;img.height=Math.round(720/p[2]);img.onload=()=>img.classList.add("ld");
