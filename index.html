@@ -378,13 +378,13 @@ section{position:relative;padding:clamp(80px,13vw,170px) var(--pad)}
 .xp .yrs b{display:block;font-size:clamp(44px,5.6vw,76px);font-weight:300;letter-spacing:-.05em;line-height:1}
 .xp .yrs b span{color:var(--acc)}
 .xp .yrs .mono{display:block;color:var(--mut);margin-top:12px;max-width:260px;line-height:1.6}
-.xp .igc{display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:20px 22px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(135deg,rgba(200,255,58,.07),rgba(255,255,255,.02));transition:border-color .3s,background .3s,transform .4s var(--ease)}
-.xp .igc .mono{color:var(--mut)}
-.xp .igc b{font-size:clamp(20px,2vw,28px);font-weight:500;letter-spacing:-.02em}
-.xp .igc b i{font-style:normal;display:inline-block;color:var(--acc);transition:transform .4s var(--ease)}
-.xp .igc .h{color:var(--acc);font-family:var(--mono);font-size:14px}
-.xp .igc:hover{border-color:var(--acc);transform:translateY(-3px)}
-.xp .igc:hover b i{transform:rotate(-45deg) translate(2px,-2px)}
+.xp{align-items:end}
+.xp .igl{display:flex;flex-direction:column;gap:14px;padding:4px 0 6px 28px;border-left:1px solid var(--line)}
+.xp .igl .mono{color:var(--mut);line-height:1.6;max-width:280px}
+.xp .igl a{display:inline-flex;align-items:center;gap:12px;width:fit-content;font-size:clamp(22px,2.4vw,32px);font-weight:400;letter-spacing:-.02em;color:var(--fg);transition:color .3s}
+.xp .igl a .ico{width:.9em;height:.9em;fill:currentColor;flex:none}
+.xp .igl a:hover{color:var(--acc)}
+@media(max-width:600px){.xp .igl{padding:22px 0 0;border-left:0;border-top:1px solid var(--line)}}
 @media(max-width:600px){.xp{grid-template-columns:1fr}}
 .stats div{padding:22px 0}
 .stats b{display:block;font-size:clamp(36px,5vw,64px);font-weight:300;letter-spacing:-.05em;line-height:1}
@@ -400,7 +400,9 @@ section{position:relative;padding:clamp(80px,13vw,170px) var(--pad)}
 .links a:first-child{border-top:1px solid var(--line)}
 .links a .v{font-size:clamp(18px,2.2vw,28px);letter-spacing:-.02em;transition:transform .6s var(--ease),color .3s}
 .links a:hover .v{transform:translateX(10px);color:var(--acc)}
-.links a .mono{color:var(--mut)}
+.links a .mono{color:var(--mut);display:inline-flex;align-items:center;gap:12px;transition:color .3s}
+.links a .ico{width:18px;height:18px;fill:currentColor;flex:none}
+.links a:hover .mono{color:var(--acc)}
 form{display:grid;gap:14px}
 form label{display:grid;gap:6px;color:var(--mut)}
 input,textarea{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--fg);font:inherit;font-size:18px;padding:10px 0;outline:none;transition:border-color .3s;border-radius:0}
@@ -477,6 +479,8 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
 <div class="grain" aria-hidden="true"></div>
 <div class="cur" aria-hidden="true"><span>Ver</span></div>
 
+<!-- Íconos: Font Awesome Free (fontawesome.com), licencia CC BY 4.0 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-wa" viewBox="0 0 448 512"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></symbol><symbol id="i-mail" viewBox="0 0 512 512"><path d="M48 64c-26.5 0-48 21.5-48 48 0 15.1 7.1 29.3 19.2 38.4l208 156c17.1 12.8 40.5 12.8 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48L48 64zM0 196L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-188-198.4 148.8c-34.1 25.6-81.1 25.6-115.2 0L0 196z"/></symbol><symbol id="i-ig" viewBox="0 0 448 512"><path d="M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></symbol><symbol id="i-yt" viewBox="0 0 576 512"><path d="M549.7 124.1C543.5 100.4 524.9 81.8 501.4 75.5 458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5C51.2 81.8 32.7 100.4 26.4 124.1 15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8 42.6 11.5 213.4 11.5 213.4 11.5s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6l0-162.4 142.7 81.2-142.7 81.2z"/></symbol><symbol id="i-in" viewBox="0 0 448 512"><path d="M100.3 448l-92.9 0 0-299.1 92.9 0 0 299.1zM53.8 108.1C24.1 108.1 0 83.5 0 53.8 0 39.5 5.7 25.9 15.8 15.8s23.8-15.8 38-15.8 27.9 5.7 38 15.8 15.8 23.8 15.8 38c0 29.7-24.1 54.3-53.8 54.3zM447.9 448l-92.7 0 0-145.6c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7l0 148.1-92.8 0 0-299.1 89.1 0 0 40.8 1.3 0c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3l0 164.3-.1 0z"/></symbol><symbol id="i-fb" viewBox="0 0 320 512"><path d="M80 299.3l0 212.7 116 0 0-212.7 86.5 0 18-97.8-104.5 0 0-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 .4 37 1.2l0-88.7C291.4 4 256.4 0 236.2 0 129.3 0 80 50.5 80 159.4l0 42.1-66 0 0 97.8 66 0z"/></symbol><symbol id="i-tt" viewBox="0 0 448 512"><path d="M448.5 209.9c-44 .1-87-13.6-122.8-39.2l0 178.7c0 33.1-10.1 65.4-29 92.6s-45.6 48-76.6 59.6-64.8 13.5-96.9 5.3-60.9-25.9-82.7-50.8-35.3-56-39-88.9 2.9-66.1 18.6-95.2 40-52.7 69.6-67.7 62.9-20.5 95.7-16l0 89.9c-15-4.7-31.1-4.6-46 .4s-27.9 14.6-37 27.3-14 28.1-13.9 43.9 5.2 31 14.5 43.7 22.4 22.1 37.4 26.9 31.1 4.8 46-.1 28-14.4 37.2-27.1 14.2-28.1 14.2-43.8l0-349.4 88 0c-.1 7.4 .6 14.9 1.9 22.2 3.1 16.3 9.4 31.9 18.7 45.7s21.3 25.6 35.2 34.6c19.9 13.1 43.2 20.1 67 20.1l0 87.4z"/></symbol></svg>
 <div id="loader" aria-hidden="true">
   <svg class="ir" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><defs><mask id="irm" maskUnits="userSpaceOnUse" x="-200" y="-200" width="500" height="500"><rect x="-200" y="-200" width="500" height="500" fill="#fff"/><polygon id="irp" points="140,50 95,127.9 5,127.9 -40,50 5,-27.9 95,-27.9" fill="#000"/></mask></defs><rect x="-200" y="-200" width="500" height="500" fill="#07080a" mask="url(#irm)"/></svg>
   <div class="vf">
@@ -615,7 +619,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
       <p class="txt reveal" style="color:var(--fg)"><span class="acc">●</span> Estoy abierto a colaborar: si tenés una idea, un proyecto o una propuesta en la que pueda aportar, me encantaría sumarme.</p>
       <div class="xp reveal">
         <div class="yrs"><b><span data-count="10" id="yrs">0</span> años</b><span class="mono">retratando momentos y contando historias</span></div>
-        <a class="igc" href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener"><span class="mono">Todo mi trabajo, día a día</span><b>Seguime en Instagram <i>↗</i></b><span class="h">@alvaro_grasso</span></a>
+        <div class="igl"><span class="mono">Para ver todo mi trabajo, seguime en Instagram</span><a href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-ig"/></svg>@alvaro_grasso</a></div>
       </div>
     </div>
   </div>
@@ -625,13 +629,13 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
   <div class="cta split">¿Hacemos <span class="out">algo</span> juntos<span class="dot">?</span></div>
   <div class="contact">
     <div class="links reveal">
-      <a href="https://wa.me/59891853950" target="_blank" rel="noopener"><span class="mono">WhatsApp</span><span class="v">091 853 950</span></a>
-      <a href="mailto:alvarograss95@gmail.com"><span class="mono">Email</span><span class="v">alvarograss95@gmail.com</span></a>
-      <a href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener"><span class="mono">Instagram</span><span class="v">@alvaro_grasso</span></a>
-      <a href="https://www.youtube.com/@alvaro_grasso" target="_blank" rel="noopener"><span class="mono">YouTube</span><span class="v">@alvaro_grasso</span></a>
-      <a href="https://www.linkedin.com/in/alvaro-grasso/" target="_blank" rel="noopener"><span class="mono">LinkedIn</span><span class="v">alvaro-grasso</span></a>
-      <a href="https://www.facebook.com/alvarograssoph/" target="_blank" rel="noopener"><span class="mono">Facebook</span><span class="v">alvarograssoph</span></a>
-      <a href="https://www.tiktok.com/@alvarograsso" target="_blank" rel="noopener"><span class="mono">TikTok</span><span class="v">@alvarograsso</span></a>
+      <a href="https://wa.me/59891853950" target="_blank" rel="noopener"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</span><span class="v">091 853 950</span></a>
+      <a href="mailto:alvarograss95@gmail.com"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>Email</span><span class="v">alvarograss95@gmail.com</span></a>
+      <a href="https://www.instagram.com/alvaro_grasso/" target="_blank" rel="noopener"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-ig"/></svg>Instagram</span><span class="v">@alvaro_grasso</span></a>
+      <a href="https://www.youtube.com/@alvaro_grasso" target="_blank" rel="noopener"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-yt"/></svg>YouTube</span><span class="v">@alvaro_grasso</span></a>
+      <a href="https://www.linkedin.com/in/alvaro-grasso/" target="_blank" rel="noopener"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-in"/></svg>LinkedIn</span><span class="v">alvaro-grasso</span></a>
+      <a href="https://www.facebook.com/alvarograssoph/" target="_blank" rel="noopener"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-fb"/></svg>Facebook</span><span class="v">alvarograssoph</span></a>
+      <a href="https://www.tiktok.com/@alvarograsso" target="_blank" rel="noopener"><span class="mono"><svg class="ico" aria-hidden="true"><use href="#i-tt"/></svg>TikTok</span><span class="v">@alvarograsso</span></a>
     </div>
     <form id="cf" class="reveal" novalidate>
       <div class="mono acc">Contame tu proyecto o tu idea para colaborar</div>
