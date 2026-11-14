@@ -362,7 +362,7 @@ section{position:relative;padding:clamp(80px,13vw,170px) var(--pad)}
 
 /* about */
 .about{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(30px,5vw,80px);align-items:start}
-.about .portrait{position:relative;display:block;width:100%;aspect-ratio:4/5;overflow:hidden;border-radius:6px;padding:0;border:0;background:none;cursor:zoom-in}
+.about .portrait{position:relative;display:block;width:100%;aspect-ratio:4/5;overflow:hidden;border-radius:6px;padding:0;border:0;background:none}
 .about .portrait .zm{position:absolute;right:12px;bottom:12px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(7,8,10,.55);color:#fff;font-size:15px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 #pz{position:fixed;inset:0;z-index:160;background:rgba(7,8,10,.94);display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;cursor:zoom-out;padding:4vh 4vw}
 #pz.on{opacity:1;visibility:visible}
@@ -503,7 +503,6 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
   <i class="flash"></i>
 </div>
 
-<div id="pz" role="dialog" aria-label="Foto de Alvaro Grasso"><button class="x" aria-label="Cerrar">×</button><img alt="Alvaro Grasso"></div>
 <header id="hdr">
   <a href="#inicio" class="logo" aria-label="Alvaro Grasso Fotografía, inicio"><img src="img/logo-ag.png" alt="Alvaro Grasso Fotografía"><span>Alvaro Grasso</span></a>
   <nav aria-label="Principal"><ul class="mono">
@@ -621,7 +620,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
 <section id="sobre-mi">
   <div class="about">
     <div class="pwrap reveal">
-      <button class="portrait" id="pzopen" aria-label="Ver foto de Alvaro Grasso en grande"><img src="img/alvaro-retrato2.jpg" alt="Retrato de Alvaro Grasso" loading="lazy" style="object-position:50% 20%"><span class="zm" aria-hidden="true">⤢</span></button>
+      <div class="portrait"><img src="img/alvaro-retrato2.jpg" alt="Retrato de Alvaro Grasso" loading="lazy" style="object-position:50% 20%"></div>
     </div>
     <div>
       <div class="mono acc reveal" style="margin-bottom:22px">05 — Sobre mí</div>
@@ -734,12 +733,6 @@ $("#yr").textContent=$("#yr2").textContent=new Date().getFullYear();
   setTimeout(()=>{L.classList.add("open");ready()},900);
   setTimeout(done,1800);
 })();
-
-/* foto de Sobre mí ampliable */
-(function(){const pz=$("#pz"),b=$("#pzopen");if(!pz||!b)return;
-  b.onclick=()=>{const i=pz.querySelector("img");if(!i.src)i.src="img/alvaro-retrato2-full.jpg";pz.classList.add("on");document.body.classList.add("lock")};
-  const close=()=>{pz.classList.remove("on");document.body.classList.remove("lock")};
-  pz.onclick=close;addEventListener("keydown",e=>{if(e.key==="Escape"&&pz.classList.contains("on"))close()});})();
 
 /* clock */
 const uyT=()=>{try{return new Date().toLocaleTimeString("es-UY",{timeZone:"America/Montevideo",hour12:false})}catch(e){const d=new Date();return [d.getHours(),d.getMinutes(),d.getSeconds()].map(pad).join(":")}};setInterval(()=>{$("#clock").textContent=uyT()},1000);
