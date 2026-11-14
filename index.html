@@ -46,13 +46,38 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   animation:grain 1s steps(6) infinite}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-2%,6%)}80%{transform:translate(5%,2%)}100%{transform:translate(0,0)}}
 
-/* preloader */
-#loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding:var(--pad);transition:transform 1.1s var(--ease)}
-#loader.out{transform:translateY(-100%)}
-#loader .num{font-size:clamp(80px,22vw,260px);font-weight:300;line-height:.8;letter-spacing:-.05em}
-#loader .bar{height:1px;background:var(--line);position:relative;margin-top:18px}
-#loader .bar i{position:absolute;left:0;top:0;height:1px;background:var(--acc);width:0;transition:width .2s}
-#loader .row{display:flex;justify-content:space-between;color:var(--mut)}
+/* preloader: visor, enfoque y obturador */
+#loader{position:fixed;inset:0;z-index:200;pointer-events:auto}
+#loader.gone{display:none}
+#loader .ir{position:absolute;inset:0;width:100%;height:100%;display:block}
+#irp{transform-box:fill-box;transform-origin:center;transform:scale(0) rotate(-50deg);transition:transform .85s cubic-bezier(.76,0,.18,1)}
+#loader.open #irp{transform:scale(1) rotate(10deg)}
+#loader .vf{position:absolute;inset:0;padding:var(--pad);transition:opacity .3s}
+#loader.open .vf{opacity:0}
+#loader .cn{position:absolute;width:30px;height:30px;border:0 solid rgba(255,255,255,.7)}
+#loader .cn.a{top:var(--pad);left:var(--pad);border-top-width:1.5px;border-left-width:1.5px}
+#loader .cn.b{top:var(--pad);right:var(--pad);border-top-width:1.5px;border-right-width:1.5px}
+#loader .cn.c{bottom:var(--pad);left:var(--pad);border-bottom-width:1.5px;border-left-width:1.5px}
+#loader .cn.d{bottom:var(--pad);right:var(--pad);border-bottom-width:1.5px;border-right-width:1.5px}
+#loader .af{position:absolute;left:50%;top:50%;width:clamp(120px,16vw,170px);aspect-ratio:1;transform:translate(-50%,-50%) scale(1.5);opacity:0;display:grid;place-items:center}
+#loader .af::before{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.55);transition:border-color .15s}
+#loader .af img{width:52%;filter:blur(9px);opacity:.85;transition:filter .55s ease-out}
+#loader.s1 .af{animation:hunt .62s cubic-bezier(.3,.7,.2,1) forwards}
+#loader.s1 .af img{filter:blur(0)}
+@keyframes hunt{0%{transform:translate(-50%,-50%) scale(1.5);opacity:0}45%{transform:translate(-50%,-50%) scale(.9);opacity:1}72%{transform:translate(-50%,-50%) scale(1.05)}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+#loader.lock .af::before{border-color:var(--acc);box-shadow:0 0 18px rgba(200,255,58,.18)}
+#loader .row{position:absolute;left:calc(var(--pad) + 44px);right:calc(var(--pad) + 44px);display:flex;justify-content:space-between;color:var(--mut);font-size:11px;letter-spacing:.14em}
+#loader .row.t{top:calc(var(--pad) + 8px)}#loader .row.u{bottom:calc(var(--pad) + 8px)}
+#loader .row span{white-space:nowrap}
+@media(max-width:600px){#loader .row{left:calc(var(--pad) + 36px);right:calc(var(--pad) + 36px);font-size:9.5px;letter-spacing:.1em}}
+#loader .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff4848;margin-right:8px;vertical-align:1px;animation:blink 1s steps(2) infinite}
+#loader.lock .dot{background:var(--acc);animation:none}
+#loader .fs{color:var(--fg);opacity:0;transition:opacity .15s}
+#loader.lock .fs{opacity:1}
+#loader .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#loader.open .flash{animation:flash .28s ease-out}
+@keyframes flash{0%{opacity:0}25%{opacity:.22}100%{opacity:0}}
+@keyframes blink{50%{opacity:.15}}
 
 /* nav */
 header{position:fixed;top:0;left:0;right:0;z-index:130;display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad);transition:background .4s,backdrop-filter .4s,transform .5s var(--ease)}
@@ -436,12 +461,14 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
 <div class="cur" aria-hidden="true"><span>Ver</span></div>
 
 <div id="loader" aria-hidden="true">
-  <div class="row mono"><img src="img/logo-ag.png" alt="" style="width:64px;height:64px;object-fit:contain"><span>Calibrando lente</span></div>
-  <div>
-    <div class="num"><span id="ln">000</span></div>
-    <div class="bar"><i id="lb-bar"></i></div>
-    <div class="row mono" style="margin-top:12px"><span>ISO 100 · f/2.8 · 1/1000</span><span>UY · <span id="yr"></span></span></div>
+  <svg class="ir" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><defs><mask id="irm" maskUnits="userSpaceOnUse" x="-200" y="-200" width="500" height="500"><rect x="-200" y="-200" width="500" height="500" fill="#fff"/><polygon id="irp" points="140,50 95,127.9 5,127.9 -40,50 5,-27.9 95,-27.9" fill="#000"/></mask></defs><rect x="-200" y="-200" width="500" height="500" fill="#07080a" mask="url(#irm)"/></svg>
+  <div class="vf">
+    <i class="cn a"></i><i class="cn b"></i><i class="cn c"></i><i class="cn d"></i>
+    <div class="row t mono"><span><i class="dot"></i>AF-S <span class="fs">· Foco</span></span><span>Alvaro Grasso</span></div>
+    <div class="af"><img src="img/logo-ag.png" alt=""></div>
+    <div class="row u mono"><span>ISO 100 · f/2.8 · 1/1000</span><span>UY · <span id="yr"></span></span></div>
   </div>
+  <i class="flash"></i>
 </div>
 
 <header id="hdr">
@@ -488,7 +515,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
 <section id="trabajos">
   <div class="sec-head">
     <h2 class="split">Trabajos <em>seleccionados</em></h2>
-    <div class="mono">08 áreas · <span id="total"></span> imágenes<br>Explorá el mosaico</div>
+    <div class="mono">04 áreas · <span id="total"></span> imágenes<br>Explorá el mosaico</div>
   </div>
   <div class="wall-filters" id="wf"></div>
   <div class="wall" id="wall"></div>
@@ -568,7 +595,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
       <p class="txt reveal">Trabajo con fotografía, video y drone: paisaje, deporte, música, arquitectura y sociedad. Busco los momentos espontáneos y los detalles que cuentan quién es cada persona, marca o lugar. También acompaño a empresas con contenido y marketing digital, para que comuniquen con una imagen clara y propia.</p>
       <p class="txt reveal" style="color:var(--fg)"><span class="acc">●</span> Estoy abierto a colaborar: si tenés una idea, un proyecto o una propuesta en la que pueda aportar, me encantaría sumarme.</p>
       <div class="stats reveal">
-        <div><b data-count="8">0</b><span class="mono">Áreas</span></div>
+        <div><b data-count="4">0</b><span class="mono">Áreas</span></div>
         <div><b data-count="0" id="statn">0</b><span class="mono">Fotos aquí</span></div>
         <div><b>4K</b><span class="mono">Video aéreo</span></div>
       </div>
@@ -632,7 +659,7 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);display:flex;fle
 <script>
 const PHOTOS=[["drone-17","aereo",1.333],["drone-16","aereo",1.333],["drone-19","aereo",0.45],["drone-01","aereo",1.333,["relevamiento"]],["drone-14","aereo",0.75],["drone-05","aereo",1.333,["relevamiento"]],["drone-07","aereo",1.333,["relevamiento"]],["drone-11","aereo",1.333],["drone-13","aereo",1.333],["drone-15","aereo",0.562],["drone-04","aereo",1.333,["relevamiento"]],["drone-06","aereo",1.333,["relevamiento"]],["drone-08","aereo",1.333,["relevamiento"]],["drone-09","aereo",1.333,["relevamiento"]],["drone-10","aereo",1.333,["relevamiento"]],["drone-12","aereo",1.333],["drone-18","aereo",1.333],["drone-02","aereo",1.333,["relevamiento"]],["drone-03","aereo",1.333,["relevamiento"]],["deportiva-08","deportiva",0.667],["deportiva-03","deportiva",0.667],["deportiva-14","deportiva",0.8],["deportiva-13","deportiva",0.667],["deportiva-12","deportiva",0.728],["deportiva-10","deportiva",0.667],["deportiva-11","deportiva",0.667],["deportiva-09","deportiva",0.667],["deportiva-05","deportiva",0.562],["deportiva-04","deportiva",0.8],["deportiva-06","deportiva",0.801],["deportiva-07","deportiva",0.8],["deportiva-02","deportiva",0.667],["deportiva-01","deportiva",1.469],["deportiva-16","deportiva",0.667],["deportiva-17","deportiva",0.667],["deportiva-18","deportiva",1.5],["musica-15","musica",0.8],["musica-19","musica",0.667,["sociales"]],["musica-17","musica",0.667],["musica-28","musica",0.667],["musica-29","musica",0.667],["musica-35","musica",0.8,["sociales"]],["musica-18","musica",0.667,["sociales"]],["musica-25","musica",0.667],["musica-26","musica",0.667],["musica-36","musica",0.804],["musica-34","musica",0.8],["musica-20","musica",0.667,["sociales"]],["musica-22","musica",0.667,["sociales"]],["musica-24","musica",0.667,["sociales"]],["musica-23","musica",0.667,["sociales"]],["musica-16","musica",0.8],["musica-27","musica",0.667],["musica-32","musica",0.8],["musica-33","musica",0.8,["sociales"]],["musica-37","musica",0.667],["musica-38","musica",0.667],["musica-39","musica",0.667],["musica-40","musica",0.727],["musica-09","musica",0.667,["sociales"]],["musica-10","musica",0.667,["sociales"]],["musica-11","musica",0.654],["musica-12","musica",0.652,["sociales"]],["musica-13","musica",0.667,["sociales"]],["musica-14","musica",0.562,["sociales"]],["musica-01","musica",1.18],["musica-02","musica",0.667],["musica-03","musica",0.667],["musica-04","musica",0.563],["musica-05","musica",0.563],["musica-06","musica",0.563],["musica-07","musica",0.563],["musica-08","musica",0.563],["musica-41","musica",0.667,["sociales"]],["musica-42","musica",0.667,["sociales"]],["musica-43","musica",0.667,["sociales"]],["musica-44","musica",0.667,["sociales"]],["musica-45","musica",0.667,["sociales"]],["musica-46","musica",0.667,["sociales"]],["musica-47","musica",0.667,["sociales"]],["marchas-07","sociales",0.667],["marchas-04","sociales",0.667],["marchas-02","sociales",0.667],["marchas-03","sociales",0.667],["marchas-06","sociales",0.667],["marchas-08","sociales",0.667],["marchas-05","sociales",0.667],["marchas-01","sociales",0.667],["sociales-02","sociales",0.667],["sociales-01","sociales",0.667],["sociales-03","sociales",0.666],["sociales-04","sociales",0.713],["gastronomia-08","gastronomia",0.642],["gastronomia-07","gastronomia",0.693],["gastronomia-05","gastronomia",0.667],["gastronomia-04","gastronomia",0.701],["gastronomia-09","gastronomia",0.678],["naturaleza-02","naturaleza",0.792],["naturaleza-03","naturaleza",0.8],["naturaleza-01","naturaleza",0.685],["naturaleza-04","naturaleza",0.667],["naturaleza-05","naturaleza",0.815],["naturaleza-06","naturaleza",1.001],["naturaleza-07","naturaleza",0.667],["naturaleza-08","naturaleza",0.8],["naturaleza-09","naturaleza",0.563],["naturaleza-10","naturaleza",0.667],["naturaleza-11","naturaleza",0.8],["naturaleza-12","naturaleza",0.668],["naturaleza-13","naturaleza",0.709],["naturaleza-14","naturaleza",0.75],["naturaleza-15","naturaleza",0.8],["naturaleza-16","naturaleza",1.5],["naturaleza-17","naturaleza",1.5],["naturaleza-18","naturaleza",0.817],["naturaleza-19","naturaleza",0.788],["naturaleza-20","naturaleza",0.662],["naturaleza-21","naturaleza",0.974],["naturaleza-22","naturaleza",0.679],["naturaleza-23","naturaleza",0.666],["naturaleza-24","naturaleza",0.744],["naturaleza-25","naturaleza",1.39],["naturaleza-26","naturaleza",1.336],["naturaleza-27","naturaleza",0.673],["naturaleza-28","naturaleza",0.764],["naturaleza-29","naturaleza",0.713],["naturaleza-30","naturaleza",0.93],["naturaleza-31","naturaleza",0.681],["naturaleza-32","naturaleza",0.666],["naturaleza-33","naturaleza",0.727],["naturaleza-34","naturaleza",0.852],["naturaleza-35","naturaleza",0.758],["naturaleza-36","naturaleza",0.662],["naturaleza-37","naturaleza",0.737],["naturaleza-38","naturaleza",0.598],["naturaleza-39","naturaleza",0.666],["naturaleza-40","naturaleza",0.682],["naturaleza-41","naturaleza",0.668],["naturaleza-42","naturaleza",0.593],["naturaleza-43","naturaleza",0.554],["naturaleza-44","naturaleza",0.665],["naturaleza-45","naturaleza",0.597],["naturaleza-46","naturaleza",0.666],["naturaleza-47","naturaleza",0.666],["naturaleza-48","naturaleza",0.666],["urbana-04","urbana",0.667],["urbana-01","urbana",0.585],["urbana-02","urbana",0.613],["urbana-03","urbana",0.664],["urbana-05","urbana",0.667,["sociales"]],["urbana-06","urbana",0.667,["sociales"]],["urbana-07","urbana",0.701],["urbana-08","urbana",0.667],["urbana-09","urbana",0.667],["urbana-10","urbana",0.667,["sociales"]],["urbana-11","urbana",0.667],["urbana-12","urbana",0.667,["sociales"]],["urbana-13","urbana",1.505],["urbana-14","urbana",1.503],["urbana-15","urbana",1.417],["urbana-16","urbana",0.666],["urbana-17","urbana",0.799],["urbana-18","urbana",1.385],["urbana-19","urbana",0.863],["urbana-20","urbana",1.135],["urbana-21","urbana",0.626],["urbana-22","urbana",0.691],["urbana-23","urbana",1.5],["urbana-24","urbana",0.69],["urbana-25","urbana",0.614],["urbana-26","urbana",1.507],["urbana-27","urbana",0.641],["urbana-28","urbana",0.729],["urbana-29","urbana",0.75],["urbana-30","urbana",0.75],["urbana-31","urbana",0.663],["urbana-32","urbana",0.579],["urbana-33","urbana",0.597],["urbana-34","urbana",0.692],["urbana-35","urbana",0.685],["urbana-36","urbana",0.659],["urbana-37","urbana",0.653],["urbana-38","urbana",0.634],["urbana-39","urbana",0.624],["urbana-40","urbana",0.68],["urbana-41","urbana",0.672],["urbana-42","urbana",0.66],["urbana-43","urbana",0.642],["arte-01","urbana",0.562],["arte-02","urbana",0.698],["arte-03","urbana",0.667],["arqueologia-01","relevamiento",0.562],["arqueologia-02","relevamiento",0.562],["obras-06","relevamiento",0.667],["obras-16","relevamiento",0.667],["obras-04","relevamiento",0.667],["obras-07","relevamiento",1.5],["obras-15","relevamiento",0.563],["obras-01","relevamiento",0.667],["obras-03","relevamiento",0.667],["obras-05","relevamiento",0.667],["obras-02","relevamiento",1.5],["obras-08","relevamiento",0.667],["obras-09","relevamiento",0.667],["obras-10","relevamiento",0.667],["obras-11","relevamiento",0.667],["obras-12","relevamiento",1.5],["obras-13","relevamiento",0.667],["obras-14","relevamiento",0.667],["pasado-01","pasado",0.75],["pasado-02","pasado",0.75],["pasado-03","pasado",0.769],["pasado-04","pasado",0.701],["pasado-05","pasado",0.693],["pasado-06","pasado",0.75],["pasado-07","pasado",0.75],["pasado-08","pasado",0.75],["pasado-09","pasado",0.75],["pasado-10","pasado",0.75],["pasado-11","pasado",0.75],["pasado-12","pasado",0.75],["pasado-13","pasado",0.75],["pasado-14","pasado",0.75],["pasado-15","pasado",0.75],["pasado-16","pasado",0.75],["pasado-17","pasado",0.741],["pasado-18","pasado",0.75],["pasado-19","pasado",0.75],["pasado-20","pasado",0.75],["pasado-21","pasado",0.75],["pasado-22","pasado",0.75],["pasado-23","pasado",0.745]];
 const ORDER={sociales:["sociales-01", "sociales-02", "marchas-04", "marchas-07", "marchas-03", "marchas-02", "marchas-05", "marchas-08", "marchas-01", "marchas-06", "musica-10", "musica-13", "musica-14", "musica-12", "musica-35", "musica-33", "musica-19", "musica-24", "musica-23", "musica-20", "musica-18", "musica-22", "musica-09", "urbana-05", "urbana-06", "urbana-10", "urbana-12", "sociales-03", "sociales-04", "musica-41", "musica-42", "musica-43", "musica-44", "musica-45", "musica-46", "musica-47"],relevamiento:["arqueologia-01", "arqueologia-02", "drone-07", "drone-06", "drone-08", "drone-05", "drone-04", "obras-06", "obras-16", "obras-04", "obras-07", "obras-15", "obras-01", "obras-03", "obras-05", "obras-02", "obras-08", "obras-09", "obras-10", "obras-11", "obras-12", "obras-13", "obras-14", "drone-09", "drone-10", "drone-01", "drone-02", "drone-03"]};
-const CATS=[
+const SUBCATS=[
  ["aereo","Tomas aéreas","drone-17"],
  ["deportiva","Deportiva","deportiva-02"],
  ["musica","Música en vivo","musica-35"],
@@ -644,38 +671,39 @@ const CATS=[
 ];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const inCat=(p,k)=>p[1]===k||(p[3]||[]).includes(k);
-const NAME=Object.fromEntries(CATS.map(c=>[c[0],c[1]]));
+/* grupos de la galería: 4 áreas que agrupan las subáreas */
+const CATS=[
+ ["aereo","Tomas aéreas","drone-17"],
+ ["sociales","Sociales","sociales-01"],
+ ["urbana","Urbana y naturaleza","urbana-04"],
+ ["relevamiento","Relevamiento y obras","obras-06"]
+];
+const SUBS={aereo:["aereo"],sociales:["sociales","musica","deportiva","gastronomia"],urbana:["urbana","naturaleza"],relevamiento:["relevamiento"]};
+const NAME=Object.fromEntries(SUBCATS.map(c=>[c[0],c[1]]));
+const GNAME=Object.fromEntries(CATS.map(c=>[c[0],c[1]]));
 NAME.pasado="Una mirada al pasado";
 const pad=n=>String(n).padStart(2,"0");
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 $("#yr").textContent=$("#yr2").textContent=new Date().getFullYear();
 $("#total").textContent=PHOTOS.length;
 
-/* preloader */
+/* preloader: enfoque y obturador (~1,6 s) */
 (function(){
-  let p=0;const ln=$("#ln"),bar=$("#lb-bar");
-  const v=$("#hv");let vidOk=false;v.addEventListener("canplay",()=>vidOk=true,{once:true});
-  const t0=performance.now();let fin=false;
-  (function tick(){
-    const el=performance.now()-t0;
-    const target=Math.min(100,(el/1600)*100*(vidOk||el>2600?1.4:1));
-    p+=(target-p)*.18; if(target>=100&&p>99.4)p=100;
-    ln.textContent=String(Math.round(p)).padStart(3,"0");bar.style.width=p+"%";
-    if(p<100&&!reduce&&!fin)requestAnimationFrame(tick);else done();
-  })();
-  setTimeout(done,3600);
-  function done(){
-    if(fin)return;fin=true;
-    ln.textContent="100";bar.style.width="100%";
-    setTimeout(()=>{$("#loader").classList.add("out");document.body.classList.remove("lock");document.body.classList.add("ready");},250);
-  }
+  const L=$("#loader");let fin=false;
+  const ready=()=>{document.body.classList.remove("lock");document.body.classList.add("ready")};
+  const done=()=>{if(fin)return;fin=true;L.classList.add("gone");ready()};
+  if(reduce){done();return}
+  L.offsetWidth;L.classList.add("s1");
+  setTimeout(()=>L.classList.add("lock"),640);
+  setTimeout(()=>{L.classList.add("open");ready()},900);
+  setTimeout(done,1800);
 })();
 
 /* clock */
 const uyT=()=>{try{return new Date().toLocaleTimeString("es-UY",{timeZone:"America/Montevideo",hour12:false})}catch(e){const d=new Date();return [d.getHours(),d.getMinutes(),d.getSeconds()].map(pad).join(":")}};setInterval(()=>{$("#clock").textContent=uyT()},1000);
 
 /* marquee */
-(function(){const words=CATS.map(c=>c[1]);const html=words.map(w=>`<span>${w}</span>`).join("");$("#mq").innerHTML=html+html;})();
+(function(){const words=SUBCATS.map(c=>c[1]);const html=words.map(w=>`<span>${w}</span>`).join("");$("#mq").innerHTML=html+html;})();
 
 /* header */
 (function(){let last=0;const h=$("#hdr");addEventListener("scroll",()=>{const y=scrollY;h.classList.toggle("solid",y>40);last=y;
@@ -705,19 +733,18 @@ const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)retur
 $$("[data-count]").forEach(el=>cio.observe(el));
 
 /* áreas: orden del mosaico, textos y álbum */
-const ORDERC=["aereo","musica","sociales","deportiva","gastronomia","urbana","naturaleza","relevamiento"];
+const ORDERC=["aereo","sociales","urbana","relevamiento"];
 const AREA={
  aereo:["Foto y video 4K","Ciudades, campo, costa y patrimonio vistos desde arriba, en foto y video 4K."],
- musica:["Escenario y backstage","Conciertos, tango, folklore y música de cámara: la energía del escenario y los detalles que no se ven desde la platea."],
- sociales:["Personas y eventos","Retratos, celebraciones y encuentros. Personas reales en momentos que importan."],
- deportiva:["Agua, nieve y aire","Surf, remo, vela, SUP y esquí, con teleobjetivo y luz de atardecer."],
- gastronomia:["Platos, ambientes y hoteles","Platos, producto, ambientes y equipos de trabajo para restaurantes, cafeterías y hoteles."],
- urbana:["Ciudad, arte y viajes","Calles, faroles, fachadas, muestras y escenas cotidianas de Colonia y del mundo."],
- naturaleza:["Paisaje y vida silvestre","Paisajes, cielos, macro y fauna: de la costa uruguaya a los volcanes de Nueva Zelanda."],
+ sociales:["Personas, música, deporte y gastronomía","Eventos, retratos y celebraciones; conciertos y backstage; surf, remo y vela; platos y ambientes para restaurantes y hoteles. Personas reales en momentos que importan."],
+ urbana:["Ciudad, paisaje y vida silvestre","Calles, faroles, fachadas y escenas cotidianas de Colonia y del mundo; paisajes, cielos, macro y fauna, de la costa uruguaya a los volcanes de Nueva Zelanda."],
  relevamiento:["Aéreo y terrestre","Relevamientos arqueológicos y de obra: registro aéreo con drone y fotografía terrestre de cada etapa y cada detalle."]
 };
 const CL=ORDERC.map(k=>CATS.find(c=>c[0]===k));
-const catList=k=>{const o=ORDER[k]?ORDER[k].map(n=>PHOTOS.findIndex(p=>p[0]===n)).filter(i=>i>=0):[];const rest=PHOTOS.map((p,i)=>i).filter(i=>inCat(PHOTOS[i],k)&&!o.includes(i));return o.concat(rest)};
+const subList=k=>{const o=ORDER[k]?ORDER[k].map(n=>PHOTOS.findIndex(p=>p[0]===n)).filter(i=>i>=0):[];const rest=PHOTOS.map((p,i)=>i).filter(i=>inCat(PHOTOS[i],k)&&!o.includes(i));return o.concat(rest)};
+const catList=k=>{const seen=new Set(),out=[];(SUBS[k]||[k]).forEach(sk=>subList(sk).forEach(i=>{if(!seen.has(i)){seen.add(i);out.push(i)}}));return out};
+/* intercala las subáreas para que la vista previa de cada grupo sea variada */
+const mixList=k=>{const ls=(SUBS[k]||[k]).map(sk=>subList(sk).filter(i=>PHOTOS[i][1]!=="pasado"));const seen=new Set(),out=[];for(let r=0;ls.some(l=>l.length>r);r++)ls.forEach(l=>{const i=l[r];if(i!=null&&!seen.has(i)){seen.add(i);out.push(i)}});return out};
 const shown=new Set();CL.forEach(c=>catList(c[0]).forEach(i=>shown.add(i)));
 $("#total").textContent=shown.size;
 const st=$("#statn");if(st)st.dataset.count=shown.size;
@@ -728,9 +755,10 @@ let wList=[],wFilter="all";
 (function(){
   const wall=$("#wall"),more=$("#wmore");
   const per=4,maxA=16;
-  const pick=k=>catList(k).filter(i=>PHOTOS[i][1]!=="pasado");
-  const lists=Object.fromEntries(CL.map(c=>[c[0],pick(c[0])]));
-  const ALL=[];for(let r=0;r<per;r++)CL.forEach(c=>{const l=lists[c[0]].filter(i=>!ALL.includes(i));if(l[0]!=null)ALL.push(l[0])});
+  const lists=Object.fromEntries(CL.map(c=>[c[0],mixList(c[0])]));
+  const SUBORD=["aereo","musica","sociales","deportiva","gastronomia","urbana","naturaleza","relevamiento"];
+  const subs=Object.fromEntries(SUBORD.map(k=>[k,subList(k).filter(i=>PHOTOS[i][1]!=="pasado")]));
+  const ALL=[];for(let r=0;r<per;r++)SUBORD.forEach(k=>{const l=subs[k].filter(i=>!ALL.includes(i));if(l[0]!=null)ALL.push(l[0])});
   const tiles={};
   const mk=i=>{if(tiles[i])return tiles[i];const d=document.createElement("div");d.className="tile";d.dataset.i=i;const k=SPR[PHOTOS[i][0]]??0;
     d.innerHTML=`<i class="sp" style="background-position:${(k%16)/15*100}% ${Math.floor(k/16)/13*100}%"></i><i class="hi"></i><span class="cap"><span>${NAME[PHOTOS[i][1]]}</span><span>↗</span></span>`;
@@ -747,7 +775,7 @@ let wList=[],wFilter="all";
     wall.style.setProperty("--cols",c);wall.innerHTML="";
     L.forEach((i,n)=>{const d=mk(i);d.classList.remove("in");d.dataset.d=Math.min(n,16)*40;wall.append(d);tio.observe(d)});
     const area=k==="all"?null:k;
-    more.textContent=area?`Ver las ${lists[k].length} fotos de ${NAME[k]} →`:"Explorar todas las áreas →";
+    more.textContent=area?`Ver las ${lists[k].length} fotos de ${GNAME[k]} →`:"Explorar todas las áreas →";
     more.onclick=()=>openAlbum(area||CL[0][0],more);
   };
   addEventListener("resize",()=>{clearTimeout(setWall.t);setWall.t=setTimeout(()=>setWall(wFilter),200)});
@@ -776,7 +804,7 @@ function fillAlbum(k){
   const g=$("#algrid");g.innerHTML="";
   L.forEach((i,n)=>{const p=PHOTOS[i];const f=document.createElement("figure");f.className="ph";f.dataset.d=Math.min(n,10)*60;
     const img=new Image();img.loading="lazy";img.decoding="async";img.alt=c[1];img.src=`img/${p[0]}-t.jpg`;img.width=720;img.height=Math.round(720/p[2]);img.onload=()=>img.classList.add("ld");
-    f.append(img);f.insertAdjacentHTML("beforeend",`<figcaption class="mono"><span>${c[1]}</span><span>${pad(n+1)}</span></figcaption>`);
+    f.append(img);f.insertAdjacentHTML("beforeend",`<figcaption class="mono"><span>${NAME[p[1]]||c[1]}</span><span>${pad(n+1)}</span></figcaption>`);
     f.onclick=()=>openLB(i,visible);g.append(f);gio.observe(f)});
   const nx=CL[(ORDERC.indexOf(k)+1)%CL.length];const ne=$("#alnext");ne.querySelector("img").src=`img/${nx[2]}-t.jpg`;ne.querySelector("b").textContent=nx[1];ne.onclick=e=>{e.preventDefault();fillAlbum(nx[0])};
   $("#album").scrollTo({top:0,behavior:"auto"});
